@@ -1,0 +1,14 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+cdk.out/
+node_modules/
+dist/
+runtime/bundle/
+runtime/reference_embeddings.json
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.streamlit/secrets.toml

@@ -1,0 +1,22 @@
+[
+  {"id":"surface-scratch-01","type":"scratch","severity":"low","text":"Fine linear scratch on a painted or polished surface. Review if it crosses a functional seal, connector, or marked inspection zone; otherwise compare with the cosmetic acceptance standard."},
+  {"id":"surface-scratch-02","type":"scratch","severity":"medium","text":"Several parallel scratches near an exposed edge can indicate handling or fixture contact. Inspect the adjacent surface and check the part orientation in the fixture."},
+  {"id":"surface-scratch-03","type":"scratch","severity":"high","text":"Deep groove with visible substrate exposure is a high severity surface defect. Hold the part for quality review and check for sharp edges or corrosion risk."},
+  {"id":"surface-scratch-04","type":"scratch","severity":"low","text":"Shallow hairline mark that is visible only under reflected light. Confirm under the plant's standard inspection lighting before rejecting."},
+  {"id":"crack-01","type":"crack","severity":"high","text":"Visible crack in a structural area is a critical defect. Quarantine the part and escalate to quality engineering; do not approve based on image review alone."},
+  {"id":"crack-02","type":"crack","severity":"high","text":"Crack extending from a hole, fastener, or corner may propagate under load. Fail the part and inspect the batch for the same pattern."},
+  {"id":"crack-03","type":"crack","severity":"medium","text":"Short surface indication near a seam may be a crack or a molding line. Use a second view or manual inspection before disposition."},
+  {"id":"crack-04","type":"crack","severity":"high","text":"A line that interrupts the material surface and branches at its end is consistent with cracking. Stop the line if repeated across parts."},
+  {"id":"missing-component-01","type":"missing component","severity":"high","text":"An empty required mounting point or vacant connector position suggests a missing component. Fail the part and verify the assembly step and feeder."},
+  {"id":"missing-component-02","type":"missing component","severity":"high","text":"A required fastener absent from a visible hole is an assembly defect. Hold for rework and inspect torque or pick-and-place records."},
+  {"id":"missing-component-03","type":"missing component","severity":"medium","text":"A partially hidden component cannot be confirmed from one angle. Mark for manual inspection or capture another view rather than assuming it is absent."},
+  {"id":"missing-component-04","type":"missing component","severity":"high","text":"A missing seal, clip, or safety-retaining part can affect function. Fail and route to the assembly station for correction."},
+  {"id":"dent-01","type":"dent","severity":"medium","text":"Localized inward deformation on a flat panel is a dent. Check depth and location against the product cosmetic limit; inspect packaging and handling."},
+  {"id":"dent-02","type":"dent","severity":"high","text":"A dent that distorts a mating surface or mounting plane can prevent assembly. Fail the part and verify the fixture and press settings."},
+  {"id":"contamination-01","type":"contamination","severity":"medium","text":"Foreign material or residue on a functional surface requires cleaning or review. Do not confuse glare or a shadow with contamination."},
+  {"id":"finish-01","type":"finish variation","severity":"low","text":"Small color or gloss variation may be acceptable if it falls within the approved visual standard. Compare under controlled lighting and include a reference sample."},
+  {"id":"image-quality-01","type":"inspection guidance","severity":"review","text":"If the product is blurred, poorly lit, partly outside the frame, or obscured, request a new image or manual inspection. Do not issue a confident pass from inadequate evidence."},
+  {"id":"image-quality-02","type":"inspection guidance","severity":"review","text":"Reflections can resemble scratches and shadows can resemble missing parts. Use diffuse lighting or another angle when the image is ambiguous."},
+  {"id":"acceptance-01","type":"acceptance guidance","severity":"review","text":"Visual AI output is a recommendation. Apply the approved inspection plan and have a qualified inspector make the final accept, rework, or reject decision."},
+  {"id":"batch-01","type":"process guidance","severity":"review","text":"When similar defects appear repeatedly, record the batch and machine context and alert the line lead. A single image does not establish a process root cause."}
+]

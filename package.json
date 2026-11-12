@@ -1,0 +1,23 @@
+{
+  "name": "linesight-quality-inspection",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demo of AI-assisted visual quality inspection for manufacturing on Amazon Bedrock",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "package:runtime": ".venv/bin/python scripts/package_runtime.py",
+    "synth": "npm run package:runtime && cdk synth",
+    "deploy": "npm run package:runtime && cdk deploy",
+    "destroy": "cdk destroy"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "aws-cdk": "^2.1033.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.274.0",
+    "constructs": "^10.4.2"
+  }
+}
