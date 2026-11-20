@@ -103,7 +103,7 @@ def invoke_runtime(frames: list[bytes], filename: str) -> dict:
     return json.loads(response["response"].read().decode("utf-8"))
 
 
-def render_result(result: dict, elapsed: float, frames: list[bytes]) -> None:
+def render_result(result: dict, elapsed: float, frames: list[bytes]) -> None:  # pragma: no cover - Streamlit UI
     inspection = result["inspection"]
     status = str(inspection.get("inspection_status", "REVIEW")).upper()
     banner = STATUS_BANNERS.get(status, st.warning)
@@ -156,47 +156,52 @@ def render_result(result: dict, elapsed: float, frames: list[bytes]) -> None:
     st.warning(result.get("review_note", "Human review is required for final disposition."))
 
 
-st.set_page_config(page_title="LineSight Quality Inspection", layout="wide")
-st.title("LineSight Quality Inspection")
-st.caption(
-    "AI-assisted visual inspection with similar reference examples. "
-    "A human inspector makes the final disposition."
-)
+def render_page() -> None:  # pragma: no cover - Streamlit UI
+    st.set_page_config(page_title="LineSight Quality Inspection", layout="wide")
+    st.title("LineSight Quality Inspection")
+    st.caption(
+        "AI-assisted visual inspection with similar reference examples. "
+        "A human inspector makes the final disposition."
+    )
 
-if not RUNTIME_ARN:
-    st.info("Set AGENT_RUNTIME_ARN to the AgentCore Runtime ARN from the CDK stack outputs.")
+    if not RUNTIME_ARN:
+        st.info("Set AGENT_RUNTIME_ARN to the AgentCore Runtime ARN from the CDK stack outputs.")
 
-uploaded = st.file_uploader(
-    "Upload a product image or a short video clip",
-    type=["jpg", "jpeg", "png", "webp", *sorted(VIDEO_TYPES)],
-)
-if uploaded:
-    is_video = Path(uploaded.name).suffix.lstrip(".").lower() in VIDEO_TYPES
-    left, right = st.columns([1, 1])
-    with left:
-        if is_video:
-            st.video(uploaded)
-            frame_count = st.slider(
-                "Frames to sample",
-                min_value=2,
-                max_value=12,
-                value=8,
-                help="Frames are sampled evenly across the clip. Each frame adds model cost.",
-            )
-        else:
-            st.image(uploaded, caption=uploaded.name, use_container_width=True)
-    label = "Inspect video" if is_video else "Inspect image"
-    if st.button(label, type="primary", disabled=not RUNTIME_ARN):
-        with right:
-            try:
-                with st.spinner("Inspecting..."):
-                    if is_video:
-                        frames = prepare_video_frames(uploaded, frame_count)
-                    else:
-                        frames = prepare_image(uploaded)
-                    started = time.monotonic()
-                    result = invoke_runtime(frames, uploaded.name)
-                    elapsed = time.monotonic() - started
-                render_result(result, elapsed, frames)
-            except Exception as exc:
-                st.error(f"Inspection failed: {type(exc).__name__}: {exc}")
+    uploaded = st.file_uploader(
+        "Upload a product image or a short video clip",
+        type=["jpg", "jpeg", "png", "webp", *sorted(VIDEO_TYPES)],
+    )
+    if uploaded:
+        is_video = Path(uploaded.name).suffix.lstrip(".").lower() in VIDEO_TYPES
+        left, right = st.columns([1, 1])
+        with left:
+            if is_video:
+                st.video(uploaded)
+                frame_count = st.slider(
+                    "Frames to sample",
+                    min_value=2,
+                    max_value=12,
+                    value=8,
+                    help="Frames are sampled evenly across the clip. Each frame adds model cost.",
+                )
+            else:
+                st.image(uploaded, caption=uploaded.name, use_container_width=True)
+        label = "Inspect video" if is_video else "Inspect image"
+        if st.button(label, type="primary", disabled=not RUNTIME_ARN):
+            with right:
+                try:
+                    with st.spinner("Inspecting..."):
+                        if is_video:
+                            frames = prepare_video_frames(uploaded, frame_count)
+                        else:
+                            frames = prepare_image(uploaded)
+                        started = time.monotonic()
+                        result = invoke_runtime(frames, uploaded.name)
+                        elapsed = time.monotonic() - started
+                    render_result(result, elapsed, frames)
+                except Exception as exc:
+                    st.error(f"Inspection failed: {type(exc).__name__}: {exc}")
+
+
+if __name__ == "__main__":
+    render_page()

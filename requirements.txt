@@ -3,3 +3,5 @@ streamlit>=1.50.0
 pillow>=11.0.0
 python-dotenv>=1.0.0
 opencv-python-headless>=4.10.0
+pytest>=9.2.0
+pytest-cov>=7.0.0

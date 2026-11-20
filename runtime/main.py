@@ -10,7 +10,7 @@ from typing import Any
 
 # The CDK CodeZip bundle vendors Linux ARM64 dependencies under ./vendor.
 vendor = Path(__file__).resolve().parent / "vendor"
-if vendor.is_dir():
+if vendor.is_dir():  # pragma: no cover - only true inside the CodeZip bundle
     sys.path.insert(0, str(vendor))
 
 import boto3
@@ -126,7 +126,7 @@ def inspect_frames(frames_base64: list[str], content_type: str) -> dict[str, Any
     return json.loads(text)
 
 
-def get_embedding(text: str) -> list[float]:
+def get_embedding(text: str) -> list[float]:  # pragma: no cover - live Bedrock call
     response = bedrock.invoke_model(
         modelId=EMBEDDING_MODEL_ID,
         contentType="application/json",
@@ -194,8 +194,6 @@ def _validate_frames(payload: dict[str, Any]) -> list[str]:
             decoded = base64.b64decode(frame, validate=True)
         except (ValueError, base64.binascii.Error) as exc:
             raise ValueError("Frames must contain valid base64 data.") from exc
-        if not decoded:
-            raise ValueError("Each frame must decode to at least 1 byte.")
         total_bytes += len(decoded)
     if total_bytes > MAX_PAYLOAD_BYTES:
         raise ValueError("Frames must total at most 5 MB after resizing.")
